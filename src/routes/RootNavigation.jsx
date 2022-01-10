@@ -10,7 +10,7 @@ const RooteNavigation = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ToDoListContainer />} />
-        <Route path="/edit/:uuid" element={<EditToDoContainer />} />
+        <Route path="/edit/:uuid/:content" element={<EditToDoContainer />} />
         <Route path="/common" element={<CommonNavigationContainer />} />
       </Routes>
     </BrowserRouter>

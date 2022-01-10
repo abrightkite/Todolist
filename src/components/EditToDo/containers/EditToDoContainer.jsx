@@ -1,18 +1,23 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import EditToDo from "../EditToDo";
 
-const EditToDoContainer = (props) => {
+const EditToDoContainer = () => {
   const editInputRef = useRef();
-  const [input, setInput] = useState();
+  const params = useParams();
+  const [editInput, setInput] = useState(params.content);
   const navigate = useNavigate();
-  const item = props;
+
+  console.log(params);
+
+  useEffect(() => {}, [editInput]);
 
   const handleInput = (e) => {
     setInput(e.target.value);
   };
+
   const saveClick = () => {
-    // const item = { uuid: uuid, content: input };
+    const item = { uuid: params.uuid, content: editInput };
     navigate("/");
   };
 

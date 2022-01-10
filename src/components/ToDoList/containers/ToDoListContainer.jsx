@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ToDoList from "../ToDoList";
 
@@ -14,6 +14,7 @@ const ToDoListContainer = ({ item }) => {
   const onEditButtonPressed = (e, item) => {
     e.preventDefault();
     setIsActive(!isActive);
+    navigate(`/edit/${item.uuid}/${item.content}`);
   };
 
   //삭제
