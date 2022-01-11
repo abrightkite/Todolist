@@ -1,33 +1,50 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditToDo from "../EditToDo";
+import useToDoList from "../../../hooks/useToDoList";
 
 const EditToDoContainer = () => {
-  const editInputRef = useRef();
   const params = useParams();
-  const [editInput, setInput] = useState(params.content);
+  const { items, setItems } = useToDoList();
+  const [editInput, setEditInput] = useState("");
   const navigate = useNavigate();
 
-  console.log(params);
-
-  useEffect(() => {}, [editInput]);
-
   const handleInput = (e) => {
-    setInput(e.target.value);
+    setEditInput(e.target.value);
+    console.log(editInput);
   };
 
   const saveClick = () => {
-    const item = { uuid: params.uuid, content: editInput };
-    navigate("/");
+    const updateList = [...items];
+
+    setItems(
+      updateList.map((item) => ({
+        ...item,
+        content: item.uuid === params.uuid ? item.content : editInput,
+      }))
+    );
+
+    console.log(
+      updateList.map((item) => ({
+        ...item,
+        content: item.uuid === params.uuid ? item.content : editInput,
+      }))
+    );
+
+    navigate(-1);
   };
 
   const cancleClick = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    setEditInput(params.content);
+  }, []);
+
   return (
     <EditToDo
-      editInputRef={editInputRef}
+      editInput={editInput}
       handleInput={handleInput}
       saveClick={saveClick}
       cancleClick={cancleClick}

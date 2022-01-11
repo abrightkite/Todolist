@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useToDoList from "../../../hooks/useToDoList";
 import ToDoList from "../ToDoList";
 
-const ToDoListContainer = ({ item }) => {
+const ToDoListContainer = () => {
+  const { items, setItems } = useToDoList();
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
   const [isActive, setIsActive] = useState(false);
-  const [searchItem, setSearchItem] = useState(null);
   const addInputRef = useRef();
   const searchInputRef = useRef();
+  const [searchItem, setSearchItem] = useState(null);
 
   //수정
   const onEditButtonPressed = (e, item) => {
@@ -21,8 +22,6 @@ const ToDoListContainer = ({ item }) => {
   const onDeletedButtonPressed = (e, index) => {
     e.preventDefault();
     setIsActive(!isActive);
-
-    console.log(items);
 
     const clone = [...items];
     clone.splice(index, 1);
@@ -39,8 +38,9 @@ const ToDoListContainer = ({ item }) => {
       uuid: Date.now(),
       content: addInputRef.current.value,
     };
-    addInputRef.current.value = "";
     setItems([item, ...items]);
+
+    addInputRef.current.value = "";
   };
 
   // 검색
@@ -54,6 +54,10 @@ const ToDoListContainer = ({ item }) => {
     searchInputRef.current.value = "";
   };
 
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+
   return (
     <ToDoList
       onEditButtonPressed={onEditButtonPressed}
@@ -61,9 +65,9 @@ const ToDoListContainer = ({ item }) => {
       onToDoItemSearched={onToDoItemSearched}
       onTodoItemSubmitted={onTodoItemSubmitted}
       items={items}
-      searchItem={searchItem}
       addInputRef={addInputRef}
       searchInputRef={searchInputRef}
+      isActive={isActive}
     />
   );
 };

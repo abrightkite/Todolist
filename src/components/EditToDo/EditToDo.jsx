@@ -1,13 +1,7 @@
 import React from "react";
 import "./css/index.css";
 
-const EditToDo = ({
-  editInputRef,
-  editInput,
-  handleInput,
-  saveClick,
-  cancleClick,
-}) => {
+const EditToDo = ({ editInput, handleInput, saveClick, cancleClick }) => {
   return (
     <div className="Edit">
       <h1>수정하기</h1>
@@ -15,7 +9,6 @@ const EditToDo = ({
         className="editInput"
         type="text"
         value={editInput}
-        ref={editInputRef}
         onChange={handleInput}
       />
       <div>
