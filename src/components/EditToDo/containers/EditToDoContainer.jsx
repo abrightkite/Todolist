@@ -17,21 +17,18 @@ const EditToDoContainer = () => {
   const saveClick = () => {
     const updateList = [...items];
 
-    setItems(
-      updateList.map((item) => ({
-        ...item,
-        content: item.uuid === params.uuid ? item.content : editInput,
-      }))
-    );
+    const idx = items.findIndex((item) => {
+      return item.uuid === params.uuid;
+    });
 
-    console.log(
-      updateList.map((item) => ({
-        ...item,
-        content: item.uuid === params.uuid ? item.content : editInput,
-      }))
-    );
-
-    navigate(-1);
+    const editedItems = [
+      ...items.slice(0, idx),
+      { uuid: params.uuid, content: editInput },
+      ...items.slice(idx + 1),
+    ];
+    setItems(editedItems);
+    console.log(idx);
+    // navigate(-1);
   };
 
   const cancleClick = () => {
